@@ -1,8 +1,8 @@
 FROM alpine:3.3
 MAINTAINER Yusuke KUOKA <kuoka@chatwork.com>
 
-ENV DOCKER_VERSION=1.11.1 \
-    DOCKER_COMPOSE_VERSION=1.7.1
+ENV DOCKER_VERSION=1.12.1 \
+    DOCKER_COMPOSE_VERSION=1.8.0
 
 # Install Docker, Docker Compose
 RUN apk --update --no-cache \
@@ -12,10 +12,6 @@ RUN apk --update --no-cache \
     && \
         apk add py-pip && \
         pip install docker-compose==${DOCKER_COMPOSE_VERSION}
-
-COPY ./entrykit /bin/entrykit
-
-RUN chmod +x /bin/entrykit && entrykit --symlink
 
 COPY ./docker-compose.yml /src/
 
@@ -40,4 +36,3 @@ ENV CODEP_COMPOSE=/usr/bin/docker-compose\ up
 # Its usage would be something like: source /docker.lib.sh && start_docker "" "" "-g=$(pwd)/graph"
 COPY docker-lib.sh /docker-lib.sh
 
-ENTRYPOINT ["entrykit", "-e"]
